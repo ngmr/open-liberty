@@ -34,6 +34,7 @@ public class TimerServiceObjectFactory implements ObjectFactory{
 			Hashtable<?, ?> environment) throws Exception {
 		  if (TraceComponent.isAnyTracingEnabled() && tc.isDebugEnabled())
 	            Tr.debug(tc, "TimerServiceObjectFactory getInstance");
+            // Should there be checking of (obj instanceof Reference) or ((Reference)obj).getClassName() here ?
 		return ExternTimerService.getInstance();
 	}
 	

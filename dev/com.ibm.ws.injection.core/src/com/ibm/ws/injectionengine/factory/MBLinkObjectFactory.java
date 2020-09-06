@@ -96,11 +96,9 @@ public class MBLinkObjectFactory implements ObjectFactory
         // -----------------------------------------------------------------------
         if (!(obj instanceof Reference))
         {
-            Exception inex = new InjectionException
-                            ("Binding object is not a Reference : " + obj);
             if (isTraceOn && tc.isEntryEnabled())
-                Tr.exit(tc, "getObjectInstance : " + inex);
-            throw inex;
+                Tr.exit(tc, "getObjectInstance : null (non-Reference)");
+            return null;
         }
 
         Reference ref = (Reference) obj;
@@ -110,11 +108,9 @@ public class MBLinkObjectFactory implements ObjectFactory
         // -----------------------------------------------------------------------
         if (!ref.getFactoryClassName().equals(CLASS_NAME))
         {
-            Exception inex = new InjectionException
-                            ("Incorrect factory for Reference : " + obj);
             if (isTraceOn && tc.isEntryEnabled())
-                Tr.exit(tc, "getObjectInstance : " + inex);
-            throw inex;
+                Tr.exit(tc, "getObjectInstance : null (wrong factory class: " + ref.getFactoryClassName() + ")");
+            return null;
         }
 
         // -----------------------------------------------------------------------

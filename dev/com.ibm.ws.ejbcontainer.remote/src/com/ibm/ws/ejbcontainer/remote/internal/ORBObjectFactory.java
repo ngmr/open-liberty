@@ -53,6 +53,7 @@ public class ORBObjectFactory implements ObjectFactory {
             return null;
         }
 
+        // Should there be a check for ((Reference)o).getClassName() ?
         return orbRef.getServiceWithException().getORB();
     }
 }

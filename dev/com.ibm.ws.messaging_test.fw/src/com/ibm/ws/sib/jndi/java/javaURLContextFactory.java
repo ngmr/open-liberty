@@ -42,6 +42,7 @@ public class javaURLContextFactory implements ObjectFactory {
      * @throws java.lang.Exception
      */
     public Object getObjectInstance(Object urlInfo, Name name, Context nameCtx, Hashtable environment) throws Exception {
+        // Review
         if (urlInfo == null) {
             return new javaURLContext(environment);
         }

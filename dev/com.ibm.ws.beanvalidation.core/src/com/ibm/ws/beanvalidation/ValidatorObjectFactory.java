@@ -34,6 +34,7 @@ public class ValidatorObjectFactory implements ObjectFactory
         if (isTraceOn && tc.isEntryEnabled())
             Tr.entry(tc, "getObjectInstance : " + Util.identity(obj));
 
+            // Should there be checking of (obj instanceof Reference) or ((Reference)obj).getClassName() here ?
         Validator validator = AbstractBeanValidation.getValidatorFactory().getValidator();
 
         if (isTraceOn && tc.isEntryEnabled())

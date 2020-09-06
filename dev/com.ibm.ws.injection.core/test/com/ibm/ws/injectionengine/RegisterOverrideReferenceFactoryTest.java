@@ -90,6 +90,7 @@ public class RegisterOverrideReferenceFactoryTest
         @Override
         public Object getObjectInstance(Object o, Name n, Context c, Hashtable<?, ?> envmt)
         {
+            // Should there be checking for (o instanceof Reference) and ((Reference)o).getClassName() ?
             return new TestSimpleValue("overridden");
         }
     }

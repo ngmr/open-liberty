@@ -26,6 +26,7 @@ public class WebServiceContextObjectFactory implements ObjectFactory {
     /** {@inheritDoc} */
     @Override
     public Object getObjectInstance(Object o, Name n, Context c, @Sensitive Hashtable<?, ?> envmt) throws Exception {
+        // Should there be checks for (o instanceof Reference) and ((Reference)o).getClassName() ?
         return new WebServiceContextWrapper();
     }
 

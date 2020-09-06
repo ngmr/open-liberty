@@ -27,6 +27,7 @@ public class UOWManagerJNDIFactory implements ObjectFactory
 
     public Object getObjectInstance(Object referenceObject, Name name, Context context, Hashtable env) throws Exception
     {
+            // Should there be checking for (referenceObject instanceof Reference) and ((Reference)referenceObject).getClassName() ?
         if (TraceComponent.isAnyTracingEnabled() && tc.isEntryEnabled()) Tr.entry(tc, "getObjectInstance", new Object[]{referenceObject, name, context, env});
 
         final Object o = UOWManagerFactory.getUOWManager();

@@ -76,6 +76,7 @@ public class HybridUserActivitySessionObjectFactory implements ObjectFactory
         {
             Tr.entry(tc, "getObjectInstance", new Object[] { obj, name });
         }
+        // Should there be checking of (obj instanceof Reference) or ((Reference)obj).getClassName() here ?
 
         // EJB and Web require different ActivitySession factories.
         //

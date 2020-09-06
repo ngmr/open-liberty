@@ -69,6 +69,7 @@ public class TimerServiceObjectFactory implements InjectionObjectFactory
     {
         if (TraceComponent.isAnyTracingEnabled() && tc.isEntryEnabled())
             Tr.entry(tc, "getObjectInstance : " + obj);
+        // Should there be checking of (obj instanceof Reference) or ((Reference)obj).getClassName() here ?
 
         // F743-17630CodRv
         // This factory should only be used from inside an ejb.

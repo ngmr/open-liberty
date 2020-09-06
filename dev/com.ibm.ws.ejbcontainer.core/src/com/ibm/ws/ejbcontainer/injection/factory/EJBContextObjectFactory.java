@@ -66,6 +66,7 @@ public class EJBContextObjectFactory implements InjectionObjectFactory
         final boolean isTraceOn = TraceComponent.isAnyTracingEnabled();
         if (isTraceOn && tc.isEntryEnabled())
             Tr.entry(tc, "getObjectInstance : " + obj);
+        // Should there be checking of (obj instanceof Reference) or ((Reference)obj).getClassName() here ?
 
         // F743-17630CodRv
         // This factory should only be used from inside an ejb.

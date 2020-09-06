@@ -121,7 +121,8 @@ public class EJBLocalURLContextFactory implements ObjectFactory {
         } else if (o instanceof String) {
             context = new EJBLocalURLContext(env, helperServices).lookup((String) o);
         } else {
-            throw new OperationNotSupportedException();
+            // Allow other ObjectFactory objects to try
+            return null;
         }
         if (isTraceOn && tc.isEntryEnabled()) {
             Tr.exit(tc, "getObjectInstance: " + context);

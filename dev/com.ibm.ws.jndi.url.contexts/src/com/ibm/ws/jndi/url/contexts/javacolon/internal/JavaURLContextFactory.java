@@ -91,7 +91,8 @@ public class JavaURLContextFactory implements ObjectFactory {
         } else if (o instanceof String) {
             return new JavaURLContext(envmt, helperServices).lookup((String) o);
         } else {
-            throw new OperationNotSupportedException();
+            // let other registered ObjectFactory objects try
+            return null;
         }
     }
 

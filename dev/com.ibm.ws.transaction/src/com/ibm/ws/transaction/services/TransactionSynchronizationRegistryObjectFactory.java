@@ -22,6 +22,7 @@ public class TransactionSynchronizationRegistryObjectFactory implements ObjectFa
 
     @Override
     public Object getObjectInstance(Object o, Name n, Context c, Hashtable<?, ?> envmt) throws Exception {
+        // Should there be checking for (o instanceof Reference) and ((Reference)o).getClassName() ?
         return EmbeddableTransactionSynchronizationRegistryFactory.getTransactionSynchronizationRegistry();
     }
 

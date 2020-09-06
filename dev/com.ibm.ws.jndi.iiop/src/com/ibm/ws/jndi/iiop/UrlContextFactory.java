@@ -73,7 +73,8 @@ public abstract class UrlContextFactory implements ObjectFactory, ApplicationRec
             if (tc.isDebugEnabled()) Tr.debug(tc, methodName + "object was a string[] - ignoring");
         }
 
-        throw new OperationNotSupportedException();
+        // let other registered ObjectFactory objects try
+        return null;
     }
     
     private void registerCaller() {

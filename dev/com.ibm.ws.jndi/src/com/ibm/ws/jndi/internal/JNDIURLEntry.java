@@ -148,6 +148,7 @@ public class JNDIURLEntry implements ObjectFactory {
     @Override
     public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment) throws Exception {
         if (obj instanceof Reference) {
+            // Should there be a check on ((Reference)obj).getClassName() ?
             try {
                 String jndiName = nameCtx == null ? "" : nameCtx.getNameInNamespace();
                 jndiName += name == null ? "" : name.toString();

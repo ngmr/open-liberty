@@ -67,14 +67,16 @@ public class SipFactoryObjectFactory implements ObjectFactory  {
 	
 		// Is obj a Reference?
 		if ( !( obj instanceof Reference ) ) {
-			throw new InjectionException("Binding object is not a Reference : " + obj );
+                    // log and return null ?
+                    return null;
 		}
 
 		Reference ref = (Reference) obj;
 
 		// Is the right factory for this reference?
 		if ( !ref.getFactoryClassName().equals( this.getClass().getName() ) ) {
-			throw new InjectionException( "Incorrect factory for Reference : " + obj );
+                    // log and return null ?
+                    return null;
 		}
 
 		// Is address null?

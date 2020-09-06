@@ -52,6 +52,7 @@ public class HybridUserTransactionObjectFactory implements InjectionObjectFactor
         final boolean isTraceOn = TraceComponent.isAnyTracingEnabled();
         if (isTraceOn && tc.isDebugEnabled())
             Tr.debug(tc, "getObjectInstance (jndi)");
+        // Should there be checking of (obj instanceof Reference) or ((Reference)obj).getClassName() here ?
 
         ComponentMetaData cmd = ComponentMetaDataAccessorImpl.getComponentMetaDataAccessor().getComponentMetaData();
         BeanMetaData bmd = cmd instanceof BeanMetaData ? (BeanMetaData) cmd : null;

@@ -374,6 +374,7 @@ public class TestHelper
         @Override
         public Object getObjectInstance(Object o, Name n, Context c, Hashtable<?, ?> envmt)
         {
+            // Should there be checking for (o instanceof Reference) and ((Reference)o).getClassName() ?
             Reference ref = (Reference) o;
             String jndiName = (String) ref.get(IndirectJndiLookupObjectFactory.class.getName()).getContent();
             return lookup(jndiName);

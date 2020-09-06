@@ -115,6 +115,7 @@ public class RegisterObjectFactoryTest
         @Override
         public Object getObjectInstance(Object o, Name n, Context c, Hashtable<?, ?> envmt)
         {
+            // Should there be checking for (o instanceof Reference) and ((Reference)o).getClassName() ?
             Reference ref = (Reference) o;
             ResourceInfoRefAddr refAddr = (ResourceInfoRefAddr) ref.get(0);
             ResourceInfo info = (ResourceInfo) refAddr.getContent();
