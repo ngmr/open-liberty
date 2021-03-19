@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
+import com.ibm.ws.transport.iiop.config.ConfigAdapter;
 import com.ibm.ws.transport.iiop.spi.IIOPEndpoint;
 import com.ibm.ws.transport.iiop.spi.ReadyListener;
 import com.ibm.ws.transport.iiop.spi.SubsystemFactory;
@@ -53,12 +54,14 @@ public final class ORBWrapper implements ReadyListener {
     @Activate
     public ORBWrapper(
                Map<String,Object> properties,
-               @Reference(target = "(component.factory=com.ibm.ws.transport.iiop.internal.ORBWrapperInternal)")
+               @Reference(name="ComponentFactory",target = "(id=unbound)")
                ComponentFactory<ORBWrapperInternal> factory,
-               @Reference(cardinality = MULTIPLE, policyOption = GREEDY)
+               @Reference(name="IiopEndpoint", cardinality = MULTIPLE, policyOption = GREEDY)
                List<IIOPEndpoint> endpoints,
-               @Reference(cardinality = MULTIPLE, policyOption = GREEDY)
-               List<SubsystemFactory> subsystemFactories
+               @Reference(name="SubsystemFactory", cardinality = MULTIPLE, policyOption = GREEDY)
+               List<SubsystemFactory> subsystemFactories,
+               @Reference(name="ConfigAdapter")
+               ConfigAdapter unused
                ) {
         this.properties = unmodifiableMap(properties);
         this.factory = factory;
