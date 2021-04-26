@@ -23,8 +23,11 @@ import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
@@ -107,6 +110,59 @@ public final class ORBWrapper {
             final Hashtable<String, Object> h = new Hashtable<>();
             h.putAll(properties);
             return h;
+        }
+    }
+
+    private interface State {
+        boolean isTransitional();
+        void transitioned();
+    }
+    
+    private static class BasicState implements State {
+        public boolean isTransitional() { return false; }
+        public void transitioned() {}
+    }
+    
+    private static class TransitionalState implements State {
+        private final CountDownLatch latch = new CountDownLatch(1);
+        
+        public boolean isTransitional() {
+            try {
+                latch.await();
+            } catch (InterruptedException ignored) {}
+            return true;
+        }
+        
+        public void transitioned() { latch.countDown(); }
+    }
+    
+    public static class StateRef {
+        private final AtomicReference<State> ref;
+        
+        StateRef(State initialState) { ref = new AtomicReference<>(initialState); }
+        
+        /**
+         * @return null if the state is unchanged, otherwise the value of the new state
+         */
+        public State update(UnaryOperator<State> updater) {
+            State curState, nextState = null;
+            do {
+                curState = ref.get();
+                if (curState.isTransitional()) continue;
+                nextState = updater.apply(curState);
+                if (nextState == curState) return null;
+            } while (false == ref.compareAndSet(curState, nextState));
+            curState.transitioned();
+            return nextState;
+        }
+        
+        public void set(final State newState) {
+            final State oldState = ref.getAndSet(newState);
+            if (newState != oldState) oldState.transitioned();
+        }
+        
+        public State get() {
+            return ref.get();
         }
     }
 }
