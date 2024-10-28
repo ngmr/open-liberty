@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-2.0/
- * 
+ *
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
@@ -12,13 +12,21 @@
  *******************************************************************************/
 package com.ibm.ws.jndi.iiop;
 
-import static org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE;
+import static org.osgi.service.component.annotations.ConfigurationPolicy.REQUIRE;
 
 import javax.naming.spi.ObjectFactory;
 
 import org.osgi.service.component.annotations.Component;
 
+import com.ibm.wsspi.application.lifecycle.ApplicationPrereq;
 import com.ibm.wsspi.application.lifecycle.ApplicationRecycleComponent;
 
-@Component(configurationPolicy=IGNORE,property={"service.vendor=ibm","osgi.jndi.url.scheme=corbaname"})
-public class CorbanameUrlContextFactory extends UrlContextFactory implements ObjectFactory, ApplicationRecycleComponent {}
+/**
+ * One of the context factories should be an {@link ApplicationPrereq}
+ * to represent this bundle being up and running.
+ * This (the most commonly used one) was chosen.
+ */
+
+
+@Component(configurationPolicy=REQUIRE,property={"service.vendor=ibm","osgi.jndi.url.scheme=corbaname"})
+public class CorbanameUrlContextFactory extends UrlContextFactory implements ObjectFactory, ApplicationRecycleComponent, ApplicationPrereq {}
