@@ -16,17 +16,25 @@ import static org.osgi.service.component.annotations.ConfigurationPolicy.REQUIRE
 
 import javax.naming.spi.ObjectFactory;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
+import com.ibm.ws.transport.iiop.spi.ClientORBRef;
 import com.ibm.wsspi.application.lifecycle.ApplicationPrereq;
 import com.ibm.wsspi.application.lifecycle.ApplicationRecycleComponent;
 
 /**
- * One of the context factories should be an {@link ApplicationPrereq}
- * to represent this bundle being up and running.
- * This (the most commonly used one) was chosen.
+ * One of the context factories in this bundle should be an {@link ApplicationPrereq}.
+ * This will cause applications to wait until this bundle is ready.
+ * This URL context factory was chosen since "corbaname:" is the most common lookup protocol.
  */
 
 
 @Component(configurationPolicy=REQUIRE,property={"service.vendor=ibm","osgi.jndi.url.scheme=corbaname"})
-public class CorbanameUrlContextFactory extends UrlContextFactory implements ObjectFactory, ApplicationRecycleComponent, ApplicationPrereq {}
+public class CorbanameUrlContextFactory extends UrlContextFactory implements ObjectFactory, ApplicationRecycleComponent, ApplicationPrereq {
+    @Activate
+    public CorbanameUrlContextFactory(@Reference ClientORBRef orbRef) {
+        super(orbRef);
+    }
+}
