@@ -20,5 +20,4 @@ package com.ibm.wsspi.application.lifecycle;
  *   <com.ibm.wsspi.application.lifecycle.ApplicationPrereq className="fully.qualified.ClassName" />
  * }
  */
-public interface ApplicationPrereq {
-}
+public interface ApplicationPrereq {}
